@@ -8,12 +8,8 @@ int main(){
     Hash* vetorC = NULL;
     int escolha = 0;
 
-    
-
-
-    
     do{
-    
+       menu();
     printf("Escolha um numero do Menu:");
     scanf("%d", &escolha);
 
@@ -33,10 +29,16 @@ int main(){
 
                  break; 
          case 4:
+
+                 break;
+         case 5:
+           
+                 break; 
+         case 6:
              vetorA = imprime(vetorA);
              vetorB = imprime(vetorB);
              vetorC = imprime(vetorC);
-                 break;                  
+                 break;                                  
     }
 
     }while (escolha != 0);

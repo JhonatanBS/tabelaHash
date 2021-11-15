@@ -38,19 +38,58 @@ int modulo(int numero){
 }
 
 Hash* insere(Hash* h){
-    int numero = 101;//rand() % 1000;
-    int mod = modulo(numero);
     Hash* aux = h;
-    printf(" mod: %d num: %d",mod,numero);
-    aux[mod].chave = numero;
-    if(aux[mod].chave)
+    
+    printf("Quantos numeros quer adicionar na tabela");
+    for(int i=0;i<Max;i++){
+      int numero = rand() % 10;
+      int mod = modulo(numero);
+      printf(" mod: %d num: %d",mod,numero);
+    if(aux[mod].chave == NULL){
+          aux[mod].chave = numero;
+          aux[mod].prox = NULL;
+    }
+    else if(aux[mod].chave != NULL){
+      Hash* conflito = (Hash*)malloc(sizeof(Hash));
+
+      if(conflito == NULL){
+         printf("Erro: Sem espaco na memoria!");
+         printf("\nPrograma encerrado por falta de memoria!");
+         exit(1);
+      }
+
+      conflito->chave = numero;
+      conflito->prox = NULL;
+
+      if(aux[mod].prox == NULL ){
+         aux[mod].prox = conflito;
+      }
+      else if(aux[mod].prox != NULL){
+           Hash* atual = aux[mod].prox;
+           while(atual->prox != NULL){
+           atual = atual->prox;
+      } 
+           atual->prox = conflito;
+      }
+    }
+}    
     return h;
 }
 
 int* imprime(Hash* h){
-    Hash* aux = h;
+    Hash* aux = h,*conflito;
+    
     for(int i = 0;i<Max;i++){
-        printf("Hash[%d] = %d\n",i,aux[i].chave);
+        printf("\nHash[%d] = %d",i,aux[i].chave);
+
+        if(aux[i].chave != NULL){
+             conflito = aux[i].prox;
+             while(conflito != NULL){
+                  printf("Lista:%d",conflito->chave);
+                  conflito = conflito->prox;
+             }
+             
+        }
     }
     return aux;
 }

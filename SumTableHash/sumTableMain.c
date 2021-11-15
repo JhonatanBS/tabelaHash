@@ -36,8 +36,8 @@ int main(){
                  break; 
          case 6:
              vetorA = imprime(vetorA);
-             vetorB = imprime(vetorB);
-             vetorC = imprime(vetorC);
+             //vetorB = imprime(vetorB);
+             //vetorC = imprime(vetorC);
                  break;                                  
     }
 

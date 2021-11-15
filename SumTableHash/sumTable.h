@@ -10,6 +10,7 @@ Hash* tableB(Hash* h);
 Hash* tableC(Hash* h);
 int modulo(int);
 Hash* insere(Hash* h);
+void busca(Hash*h);
 int* imprime(Hash* h);
 /*Funções para o Menu*/
 void criarLinhaSuperior(int tamx);

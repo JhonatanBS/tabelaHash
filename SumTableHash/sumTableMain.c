@@ -29,7 +29,7 @@ int main(){
 
                  break; 
          case 4:
-
+              busca(vetorA);
                  break;
          case 5:
            

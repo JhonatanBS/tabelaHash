@@ -39,11 +39,12 @@ int modulo(int numero){
 
 Hash* insere(Hash* h){
     Hash* aux = h;
-    
+    int escolha,numero,mod;
+
     printf("Quantos numeros quer adicionar na tabela");
     for(int i=0;i<Max;i++){
-      int numero = rand() % 10;
-      int mod = modulo(numero);
+      numero = rand() % 100;
+      mod = modulo(numero);
       printf(" mod: %d num: %d",mod,numero);
     if(aux[mod].chave == NULL){
           aux[mod].chave = numero;
@@ -92,6 +93,30 @@ int* imprime(Hash* h){
         }
     }
     return aux;
+}
+
+void busca(Hash*h){
+    int numero,mod;
+    Hash* aux = h,*atual;
+
+    printf("Qual numero deseja procurar na Tabela?");
+    scanf("%d",&numero);
+
+    mod = modulo(numero);
+
+    if(numero == aux[mod].chave)
+       printf("O numero %d pertence a Tabela Hash no indice [%d]",numero,mod);
+    else if(aux[mod].prox != NULL){
+       atual = aux[mod].prox;
+       while(atual->prox != NULL && atual->chave != numero)
+             atual = atual->prox;
+       if(atual->prox == NULL)     
+             printf("Nao encontrado o %d na Tabela!",numero);
+       else
+             printf("Encontrado o numero %d na Tabela",numero);       
+    }else{
+      printf("O %d nao esta alocado na tabela",numero);
+    }   
 }
 
 void criarLinhaSuperior(int tamx){//Criar linhas duplas em cima do Menu

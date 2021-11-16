@@ -26,7 +26,7 @@ int main(){
              vetorA = insere(vetorA);
                  break; 
          case 3:
-
+             vetorA = remover(vetorA);
                  break; 
          case 4:
               busca(vetorA);

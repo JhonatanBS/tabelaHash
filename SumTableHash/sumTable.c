@@ -42,7 +42,9 @@ Hash* insere(Hash* h){
     int escolha,numero,mod;
 
     printf("Quantos numeros quer adicionar na tabela");
-    for(int i=0;i<Max;i++){
+    scanf("%d", &escolha);
+
+    for(int i=0;i<escolha;i++){
       numero = rand() % 100;
       mod = modulo(numero);
       printf(" mod: %d num: %d",mod,numero);
@@ -77,22 +79,54 @@ Hash* insere(Hash* h){
     return h;
 }
 
-int* imprime(Hash* h){
-    Hash* aux = h,*conflito;
-    
-    for(int i = 0;i<Max;i++){
-        printf("\nHash[%d] = %d",i,aux[i].chave);
+Hash* remover(Hash* h){
+     Hash* aux = h,*atual,*pos,*ant;
+     int numero,mod;
 
-        if(aux[i].chave != NULL){
-             conflito = aux[i].prox;
-             while(conflito != NULL){
-                  printf("Lista:%d",conflito->chave);
-                  conflito = conflito->prox;
-             }
-             
-        }
+     printf("Qual numero deseja excluir da Tabela?");
+     scanf("%d",&numero);
+
+     mod = modulo(numero);
+
+    if(numero == aux[mod].chave){
+       if(aux[mod].prox == NULL)
+          aux[mod].chave = NULL;
+       else{
+          atual = aux[mod].prox;
+          pos = atual->prox;
+          aux[mod].chave = atual->chave;
+          aux[mod].prox = pos;
+       }   
+       printf("\nO numero %d foi removido da Tabela Hash no indice [%d] .",numero,mod);
+       
+      }    
+    else if(aux[mod].prox != NULL){    
+       atual = aux[mod].prox;
+       
+       while(atual != NULL && atual->chave != numero){
+           ant = atual; 
+           atual = atual->prox;
+           //pos = atual->prox;
+       }
+
+       if(atual == NULL){
+       printf("Elemento não encontrado!");
+       return h;
+       }  
+       else if(atual->prox != NULL ){
+          ant->prox = atual->prox;
+          return h;
+       }
+       else if(atual->prox == NULL){
+          ant->prox = NULL;
+          free(atual);
+          return h;    
+       }
+
+       printf("O numero %d foi removido com sucesso da Tabela",numero);      
     }
-    return aux;
+     
+  return h;
 }
 
 void busca(Hash*h){
@@ -117,6 +151,25 @@ void busca(Hash*h){
     }else{
       printf("O %d nao esta alocado na tabela",numero);
     }   
+}
+
+
+int* imprime(Hash* h){
+    Hash* aux = h,*conflito;
+    
+    for(int i = 0;i<Max;i++){
+        printf("\nHash[%d] = %d",i,aux[i].chave);
+
+        if(aux[i].chave != NULL){
+             conflito = aux[i].prox;
+             while(conflito != NULL){
+                  printf("Lista:%d",conflito->chave);
+                  conflito = conflito->prox;
+             }
+             
+        }
+    }
+    return aux;
 }
 
 void criarLinhaSuperior(int tamx){//Criar linhas duplas em cima do Menu

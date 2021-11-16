@@ -101,30 +101,47 @@ Hash* remover(Hash* h){
        
       }    
     else if(aux[mod].prox != NULL){    
-       atual = aux[mod].prox;
-       
-       while(atual != NULL && atual->chave != numero){
-           ant = atual; 
-           atual = atual->prox;
-           //pos = atual->prox;
-       }
+          atual = aux[mod].prox;
+          ant = aux;
+          
+          if(atual->prox == NULL){
+            aux[mod].prox = NULL;
+            free(atual);
+            return h;
+          }
+          else if(atual->prox != NULL && atual->chave == numero){
+            aux[mod].prox = atual->prox;
+            free(atual);
+            return h;
+          }
 
-       if(atual == NULL){
-       printf("Elemento não encontrado!");
-       return h;
-       }  
-       else if(atual->prox != NULL ){
-          ant->prox = atual->prox;
-          return h;
-       }
-       else if(atual->prox == NULL){
-          ant->prox = NULL;
-          free(atual);
-          return h;    
-       }
+          while(atual != NULL && atual->chave != numero){
+            ant = atual;
+            atual = atual->prox;
+          }
 
-       printf("O numero %d foi removido com sucesso da Tabela",numero);      
+          if(atual == NULL && ant->prox == NULL){
+            printf("O elemento nao foi encontrado");
+            return h;
+          }
+          else if(atual->prox == NULL){
+            ant->prox = NULL;
+            free(atual);
+            return h;  
+          }
+          else if(atual->prox != NULL){
+            ant->prox = atual->prox;
+            //free(atual);
+            return h;
+          }
+            
+
+
+
+      // printf("O numero %d foi removido com sucesso da Tabela",numero);      
     }
+    else if(aux[mod].prox == NULL && aux[mod].chave != numero)
+         printf("O numero %d nao esta alocado na tabela.",numero);
      
   return h;
 }

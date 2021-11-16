@@ -135,9 +135,6 @@ Hash* remover(Hash* h){
             return h;
           }
             
-
-
-
       // printf("O numero %d foi removido com sucesso da Tabela",numero);      
     }
     else if(aux[mod].prox == NULL && aux[mod].chave != numero)
@@ -149,6 +146,11 @@ Hash* remover(Hash* h){
 void busca(Hash*h){
     int numero,mod;
     Hash* aux = h,*atual;
+    
+    if(h == NULL){
+       printf("Tabela Vazia");
+       return h;
+    }
 
     printf("Qual numero deseja procurar na Tabela?");
     scanf("%d",&numero);
@@ -170,10 +172,31 @@ void busca(Hash*h){
     }   
 }
 
+Hash* juntaTabelas(Hash* A,Hash* B,Hash* C){
+    Hash *auxA = A,*auxB = B;
+    
+    if(A == NULL || B == NULL){
+      printf("Por favor, insera valores nas duas tabelas!");
+      return C;
+    }
+
+    for(int i=0;i<Max;i++){
+       if(A[i].chave != NULL){
+            C[i].chave = A[i].chave;
+            C[i].prox = NULL;
+       }
+    }
+      
+}
 
 int* imprime(Hash* h){
     Hash* aux = h,*conflito;
     
+       if(h == NULL){
+           printf("Tabela Vazia");
+       return h;
+    }
+
     for(int i = 0;i<Max;i++){
         printf("\nHash[%d] = %d",i,aux[i].chave);
 
@@ -269,5 +292,20 @@ void menu(){
    criarLinhaRodape(tam);
 }
 
+void menuInsere(){
+   
+   printf("\n");
+   criarLinhaSuperior(tam);
+   CriarMenu(tam," ?       TABELAS ");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 0  Sair");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 1  TABELA A");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 2  TABELA B");
+   criarLinhaRodape(tam);
+
+   printf("Deseja inserir em qual Tabela?");
+}
 
 

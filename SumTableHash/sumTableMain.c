@@ -6,14 +6,14 @@ int main(){
     Hash* vetorA = NULL;
     Hash* vetorB = NULL;
     Hash* vetorC = NULL;
-    int escolha = 0;
+    int escolha = 0,opcao = 0;
 
     do{
        menu();
     printf("Escolha um numero do Menu:");
-    scanf("%d", &escolha);
+    scanf("%d", &opcao);
 
-    switch(escolha){
+    switch(opcao){
          case 0:
              printf("Tabela Hash finalizado com sucesso");
                  break;
@@ -23,7 +23,17 @@ int main(){
              vetorC = tableC(vetorC); 
                  break;
          case 2:
-             vetorA = insere(vetorA);
+             menuInsere();
+             scanf("%d",&escolha);
+             
+             if(escolha == 0)
+                 printf("Saindo...");
+             if(escolha == 1)
+                 vetorA = insere(vetorA);
+             else if(escolha == 2)
+                 vetorB = insere(vetorB); 
+             else
+                 printf("Erro: Digite um valor valido na proxima vez!");       
                  break; 
          case 3:
              vetorA = remover(vetorA);
@@ -41,7 +51,7 @@ int main(){
                  break;                                  
     }
 
-    }while (escolha != 0);
+    }while (opcao != 0);
 
     return 1;
 }

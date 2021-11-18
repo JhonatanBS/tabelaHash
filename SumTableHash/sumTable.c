@@ -132,7 +132,7 @@ Hash* remover(Hash* h){
        printf("Tabela Vazia");
        return h;
     }
-    
+
      /*Pergunta ao usuário qual valor quer excluir da tabela*/
      printf("\nQual numero deseja excluir da Tabela?");
      scanf("%d",&numero);
@@ -355,52 +355,60 @@ int* imprime(Hash* h){
     return aux;
 }
 
-void superiorC(int cima,Hash* C){
+void superiorC(int cima){
      int i =0;
      
-         printf("%c",201);
+         printf("%c",218);
      for(int i = 0;i<cima;i++){
         
-        printf("%c",205);
-    }
-    if(C[i].prox != NULL)
-         printf("%c\n",203);
-    else     
-         printf("%c\n",187);
+        printf("%c",196);
+    }    
+         printf("%c\n",191);
 }
 
 void inferiorC(int baixo){
     int i;
-    printf("%c",200);
+    printf("%c",192);
     for(i = 0;i<baixo;i++){
-        printf("%c",205);
+        printf("%c",196);
     }
-    printf("%c\n",188);
+    printf("%c\n",217);
 }
 
 void horizontalC(int reto){
     int i;
-    printf("%c", 204);
+    printf("%c", 195);
     for(i=0;i<reto;i++){
-        printf("%c", 205);
+        printf("%c", 196);
     }
-    printf("%c\n", 185);
+    printf("%c\n", 180);
 }
 
-void imprimeTabelaC(Hash* C){
+void imprimeTabela(Hash* C){
     Hash* conflito;
-    superiorC(10,C);
+
+           if(C == NULL){/*Verifica se a tabela está vazia*/
+           printf("Tabela Vazia");
+       return C;/*Retorna a tabela*/
+    }
+    superiorC(10);
     for(int i = 0; i<Max;i++){
        printf("%c",186);
-       printf("    %d     ",C[i].chave);
+       printf("    %d",C[i].chave);
+       if(C[i].chave >= 0 && C[i].chave <= 9)
+           printf("     ");
+       else if(C[i].chave >= 10 && C[i].chave <= 99)
+           printf("    ");
+       else if(C[i].chave >= 110 && C[i].chave <= 999)
+           printf("   ");        
        printf("%c",186);
        if(C[i].chave != NULL){
              conflito = C[i].prox;
              while(conflito != NULL){
-                  printf("%d",conflito->chave);
+                  printf(" -> %d",conflito->chave);
                   conflito = conflito->prox;
              }
-             printf("\n");
+             printf(" -> NULL");
        }
        printf("\n");
        horizontalC(10);

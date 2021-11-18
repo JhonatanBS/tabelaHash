@@ -74,15 +74,16 @@ int main(){
          case 5:
               join(vetorC,vetorA);
               join(vetorC,vetorB);
+              imprimeTabela(vetorC);
               //juntaTabelas(vetorA,vetorB,vetorC); 
                  break; 
          case 6:
-             vetorA = imprime(vetorA);
+             imprimeTabela(vetorA);
+             imprimeTabela(vetorB);
+             /*vetorA = imprime(vetorA);
              vetorB = imprime(vetorB);
-             vetorC = imprime(vetorC);
-                 break;
-        case 7:
-             imprimeTabelaC(vetorC);                                            
+             vetorC = imprime(vetorC);*/
+                 break;                                            
     }
 
     }while (opcao != 0);/*Fim do while*/

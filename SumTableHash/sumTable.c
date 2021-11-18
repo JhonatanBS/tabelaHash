@@ -45,7 +45,7 @@ Hash* insere(Hash* h){
     scanf("%d", &escolha);
 
     for(int i=0;i<escolha;i++){
-      numero = rand() % 100;
+      numero = rand() % 1000;
       mod = modulo(numero);
       printf(" mod: %d num: %d",mod,numero);
     if(aux[mod].chave == NULL){
@@ -172,22 +172,91 @@ void busca(Hash*h){
     }   
 }
 
-Hash* juntaTabelas(Hash* A,Hash* B,Hash* C){
-    Hash *auxA = A,*auxB = B;
-    
-    if(A == NULL || B == NULL){
-      printf("Por favor, insera valores nas duas tabelas!");
-      return C;
-    }
+void juntaTabelas(Hash* A,Hash* B,Hash* C){
+     Hash *auxA = A,*auxB = B;
+         if(A == NULL || B == NULL){
+           printf("Por favor, insera valores nas duas tabelas!");
+               return C;
+                                   }
 
-    for(int i=0;i<Max;i++){
+   for(int i=0;i<Max;i++){
        if(A[i].chave != NULL){
-            C[i].chave = A[i].chave;
-            C[i].prox = NULL;
+           C[i].chave = A[i].chave;
+           C[i].prox = NULL;
+
+           if(A[i].prox != NULL){
+             auxA = A[i].prox;
+
+               while (auxA != NULL){
+                 Hash* conflitoA = (Hash*)malloc(sizeof(Hash));
+
+                   conflitoA->chave = auxA->chave;
+                   conflitoA->prox = NULL;
+
+                   if(C[i].prox == NULL ){
+                     C[i].prox = conflitoA;
+                                         }
+                   else if(C[i].prox != NULL){
+                     Hash* atual = C[i].prox;
+                         while(atual->prox != NULL)
+                           atual = atual->prox;
+               
+                           atual->prox = conflitoA;
+                                             }
+                             auxA = auxA->prox;
+                                     }
+         
+                                }     
        }
-    }
-      
+       
+       int contador = 0;
+       if(B[i].chave != NULL){/*Verifica se na posição i do vetor existe algum valor*/
+           if(C[i].chave == NULL){
+             C[i].chave = B[i].chave;
+             C[i].prox = NULL;
+             contador++;
+           }
+           if(B[i].prox != NULL){
+           if(C[i].chave != NULL){
+             
+             
+              auxB = B[i].prox;
+
+               while (auxB != NULL){
+                 Hash* conflitoB = (Hash*)malloc(sizeof(Hash));
+                   
+                   if(contador == 0){
+                     conflitoB->chave = B[i].chave;
+                     conflitoB->prox = NULL;
+                   }
+                   else{
+                   conflitoB->chave = auxB->chave;
+                   conflitoB->prox = NULL;
+                   
+                   }
+
+                   if(C[i].prox == NULL ){
+                     C[i].prox = conflitoB;
+                                         }
+                   else if(C[i].prox != NULL){
+                     Hash* atual = C[i].prox;
+                         while(atual->prox != NULL)
+                           atual = atual->prox;
+               
+                           atual->prox = conflitoB;
+                                             }
+                             auxB = auxB->prox;
+                                     }
+         
+                                } 
+           }
+
+    
+       }                    
+   }
 }
+
+
 
 int* imprime(Hash* h){
     Hash* aux = h,*conflito;
@@ -209,7 +278,61 @@ int* imprime(Hash* h){
              
         }
     }
+    printf("\n");
     return aux;
+}
+
+void superiorC(int cima,Hash* C){
+     int i =0;
+     
+         printf("%c",201);
+     for(int i = 0;i<cima;i++){
+        
+        printf("%c",205);
+    }
+    if(C[i].prox != NULL)
+         printf("%c\n",203);
+    else     
+         printf("%c\n",187);
+}
+
+void inferiorC(int baixo){
+    int i;
+    printf("%c",200);
+    for(i = 0;i<baixo;i++){
+        printf("%c",205);
+    }
+    printf("%c\n",188);
+}
+
+void horizontalC(int reto){
+    int i;
+    printf("%c", 204);
+    for(i=0;i<reto;i++){
+        printf("%c", 205);
+    }
+    printf("%c\n", 185);
+}
+
+void imprimeTabelaC(Hash* C){
+    Hash* conflito;
+    superiorC(10,C);
+    for(int i = 0; i<Max;i++){
+       printf("%c",186);
+       printf("    %d     ",C[i].chave);
+       printf("%c",186);
+       if(C[i].chave != NULL){
+             conflito = C[i].prox;
+             while(conflito != NULL){
+                  printf("%d",conflito->chave);
+                  conflito = conflito->prox;
+             }
+             printf("\n");
+       }
+       printf("\n");
+       horizontalC(10);
+    }
+    inferiorC(10);
 }
 
 void criarLinhaSuperior(int tamx){//Criar linhas duplas em cima do Menu

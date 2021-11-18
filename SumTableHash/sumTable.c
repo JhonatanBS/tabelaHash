@@ -127,7 +127,12 @@ Hash* insereC(Hash* h,int numero){
 Hash* remover(Hash* h){
      Hash* aux = h,*atual,*pos,*ant;/*Ponteiros Auxialiares para manipulaçaõ*/
      int numero,mod;/*Variáveis*/
-
+     
+    if(h == NULL){/*Sem valores na tabela*/
+       printf("Tabela Vazia");
+       return h;
+    }
+    
      /*Pergunta ao usuário qual valor quer excluir da tabela*/
      printf("\nQual numero deseja excluir da Tabela?");
      scanf("%d",&numero);
@@ -188,31 +193,35 @@ Hash* remover(Hash* h){
   return h;/*Retorna a tabela*/
 }
 
+/*Função que busca algum valor na tabela*/
 void busca(Hash*h){
-    int numero,mod;
-    Hash* aux = h,*atual;
+    int numero,mod;/*variáveis*/
+    Hash* aux = h,*atual;/*Ponteiros auxiliares*/
     
-    if(h == NULL){
+    if(h == NULL){/*Sem valores na tabela*/
        printf("Tabela Vazia");
        return h;
     }
-
-    printf("Qual numero deseja procurar na Tabela?");
+    
+    /*Pergunta ao usuário qual valor buscar na tabela*/
+    printf("\nQual numero deseja procurar na Tabela?");
     scanf("%d",&numero);
 
-    mod = modulo(numero);
+    mod = modulo(numero);/*Guarda o resto do número de busca*/
 
-    if(numero == aux[mod].chave)
+    if(numero == aux[mod].chave)/*O número está nos indice i do vetor*/
        printf("O numero %d pertence a Tabela Hash no indice [%d]",numero,mod);
-    else if(aux[mod].prox != NULL){
-       atual = aux[mod].prox;
-       while(atual->prox != NULL && atual->chave != numero)
-             atual = atual->prox;
-       if(atual->prox == NULL)     
+    else if(aux[mod].prox != NULL){/*O número para busca esta nos conflitos*/
+       atual = aux[mod].prox;/*Ponteiro aponta para o primeiro conflito ou lista*/
+
+       while(atual->prox != NULL && atual->chave != numero)/*Percorre até achar o valor de busca*/
+             atual = atual->prox;/*Avançando até o último valor*/
+
+       if(atual->prox == NULL)/*Se o ponteiro chegar no final, o valor não foi encontrado*/     
              printf("Nao encontrado o %d na Tabela!",numero);
-       else
+       else/*Valor encontrado*/
              printf("Encontrado o numero %d na Tabela",numero);       
-    }else{
+    }else{/*Não existe o valor*/
       printf("O %d nao esta alocado na tabela",numero);
     }   
 }
@@ -301,18 +310,19 @@ void busca(Hash*h){
    }
 }*/
 
+/*Função que pega os elementos da tabela e aplica na tabela C*/
 void join(Hash* C, Hash* table){
 
-  for(int i = 0; i < Max;i++){
-         Hash* auxTable = table[i].prox;
+  for(int i = 0; i < Max;i++){/*Percorre cada indice da tabela C*/
+         Hash* auxTable = table[i].prox;/*Ponteiro aponta para o primeiro conflito*/
          
-         if(table[i].chave != NULL){
+         if(table[i].chave != NULL){/*Verifica se a tabela possui elementos*/
 
-            C = insereC(C,table[i].chave);
+            C = insereC(C,table[i].chave);/*Insere no primeiro valor do indice i da tabela C*/
            
-         while(auxTable != NULL){
-           C = insereC(C,auxTable->chave);
-           auxTable = auxTable->prox;
+         while(auxTable != NULL){/*Percorre todos os conflitos da tabela para inserção na tabela C*/
+           C = insereC(C,auxTable->chave);/*Insere os conflitos*/
+           auxTable = auxTable->prox;/*Avança até chegar no último*/
          }
          }
           
@@ -320,18 +330,17 @@ void join(Hash* C, Hash* table){
 
 }
 
+/*Função que imprime as tabelas*/
 int* imprime(Hash* h){
-    Hash* aux = h,*conflito;
+    Hash* aux = h,*conflito;/*Ponteiros auxiliares*/
     
-       if(h == NULL){
+       if(h == NULL){/*Verifica se a tabela está vazia*/
            printf("Tabela Vazia");
-       return h;
+       return h;/*Retorna a tabela*/
     }
 
     for(int i = 0;i<Max;i++){
         printf("\nHash[%d] = %d",i,aux[i].chave);
-
-        
 
         if(aux[i].prox != NULL){
              conflito = aux[i].prox;
@@ -491,8 +500,21 @@ void menuInsere(){
    criaLinhaHorizontal(tam);
    CriarMenu(tam," 2  TABELA B");
    criarLinhaRodape(tam);
+}
 
-   printf("Deseja inserir em qual Tabela?");
+void menuBusca(){
+   printf("\n");
+   criarLinhaSuperior(tam);
+   CriarMenu(tam," ?       TABELAS ");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 0  Sair");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 1  TABELA A");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 2  TABELA B");
+   criaLinhaHorizontal(tam);
+   CriarMenu(tam," 3  TABELA C");
+   criarLinhaRodape(tam);
 }
 
 

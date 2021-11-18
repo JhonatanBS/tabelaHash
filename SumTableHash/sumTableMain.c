@@ -6,7 +6,7 @@ int main(){
     Hash* vetorA = NULL;
     Hash* vetorB = NULL;
     Hash* vetorC = NULL;
-    Hash* join = NULL;
+    
     int escolha = 0,opcao = 0;
 
     do{
@@ -43,8 +43,10 @@ int main(){
               busca(vetorA);
                  break;
          case 5:
+              join(vetorC,vetorA);
+              join(vetorC,vetorB);
               
-              juntaTabelas(vetorA,vetorB,vetorC); 
+              //juntaTabelas(vetorA,vetorB,vetorC); 
                  break; 
          case 6:
              vetorA = imprime(vetorA);

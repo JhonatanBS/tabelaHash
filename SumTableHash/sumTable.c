@@ -78,6 +78,43 @@ Hash* insere(Hash* h){
 }    
     return h;
 }
+/*Função auxiliar para ajudar na inserção das dua tabelas em C*/
+Hash* insereC(Hash* h,int numero){
+    Hash* aux = h;
+    int mod;
+
+    mod = modulo(numero);
+      
+    if(aux[mod].chave == NULL){
+          aux[mod].chave = numero;
+          aux[mod].prox = NULL;
+    }
+    else if(aux[mod].chave != NULL){
+      Hash* conflito = (Hash*)malloc(sizeof(Hash));
+
+      if(conflito == NULL){
+         printf("Erro: Sem espaco na memoria!");
+         printf("\nPrograma encerrado por falta de memoria!");
+         exit(1);
+      }
+
+      conflito->chave = numero;
+      conflito->prox = NULL;
+
+      if(aux[mod].prox == NULL ){
+         aux[mod].prox = conflito;
+      }
+      else if(aux[mod].prox != NULL){
+           Hash* atual = aux[mod].prox;
+           while(atual->prox != NULL){
+           atual = atual->prox;
+      } 
+           atual->prox = conflito;
+      }
+    }
+   
+    return h;
+}
 
 Hash* remover(Hash* h){
      Hash* aux = h,*atual,*pos,*ant;
@@ -172,7 +209,7 @@ void busca(Hash*h){
     }   
 }
 
-void juntaTabelas(Hash* A,Hash* B,Hash* C){
+/*void juntaTabelas(Hash* A,Hash* B,Hash* C){
      Hash *auxA = A,*auxB = B;
          if(A == NULL || B == NULL){
            printf("Por favor, insera valores nas duas tabelas!");
@@ -210,7 +247,7 @@ void juntaTabelas(Hash* A,Hash* B,Hash* C){
        }
        
        int contador = 0;
-       if(B[i].chave != NULL){/*Verifica se na posição i do vetor existe algum valor*/
+       if(B[i].chave != NULL){//Verifica se na posição i do vetor existe algum valor
            if(C[i].chave == NULL){
              C[i].chave = B[i].chave;
              C[i].prox = NULL;
@@ -254,9 +291,26 @@ void juntaTabelas(Hash* A,Hash* B,Hash* C){
     
        }                    
    }
+}*/
+
+void join(Hash* C, Hash* table){
+
+  for(int i = 0; i < Max;i++){
+         Hash* auxTable = table[i].prox;
+         
+         if(table[i].chave != NULL){
+
+            C = insereC(C,table[i].chave);
+           
+         while(auxTable != NULL){
+           C = insereC(C,auxTable->chave);
+           auxTable = auxTable->prox;
+         }
+         }
+          
+  }
+
 }
-
-
 
 int* imprime(Hash* h){
     Hash* aux = h,*conflito;
@@ -269,7 +323,9 @@ int* imprime(Hash* h){
     for(int i = 0;i<Max;i++){
         printf("\nHash[%d] = %d",i,aux[i].chave);
 
-        if(aux[i].chave != NULL){
+        
+
+        if(aux[i].prox != NULL){
              conflito = aux[i].prox;
              while(conflito != NULL){
                   printf("Lista:%d",conflito->chave);

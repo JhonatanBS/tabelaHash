@@ -10,8 +10,10 @@ Hash* tableB(Hash* h);
 Hash* tableC(Hash* h);
 int modulo(int);
 Hash* insere(Hash* h);
+Hash* insereC(Hash* h,int);
 Hash* remover(Hash* h);
 void busca(Hash*h);
+void join(Hash* C, Hash* table);
 int* imprime(Hash* h);
 /*Funções para o Menu*/
 void criarLinhaSuperior(int tamx);

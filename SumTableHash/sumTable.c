@@ -1,183 +1,191 @@
+/*Bibliotecas*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "sumTable.h"
+/*Constantes*/
 enum { Max = 50};
 #define tam 30
 
+/*Função que gera a tabela A*/
 Hash* tableA(Hash* h){
-    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));
+    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));/*Gera um vetor com 50 posições*/
 
-    for(int i=0;i<Max;i++){
-      vetor[i].chave = h;
+    for(int i=0;i<Max;i++){/*Percorre toda a tabela*/
+      vetor[i].chave = h;/*Faz todas as posições do vetor receberem NULL*/
     }
-  return vetor;
+  return vetor;/*Retorna a tabela A como um vetor*/
 }
 
+/*Função que gera a tabela B*/
 Hash* tableB(Hash* h){
-    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));
+    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));/*Gera um vetor com 50 posições*/
 
-    for(int i=0;i<Max;i++){
-      vetor[i].chave = h;
+    for(int i=0;i<Max;i++){/*Percorre toda a tabela*/
+      vetor[i].chave = h;/*Faz todas as posições do vetor receberem NULL*/
     }
-  return vetor;
+  return vetor;/*Retorna a tabela B como um vetor*/
 }
 
+/*Função que gera a tabela C*/
 Hash* tableC(Hash* h){ 
-    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));
+    Hash* vetor = (Hash*)calloc(Max,sizeof(Hash));/*Gera um vetor com 50 posições*/
 
-    for(int i=0;i<Max;i++){
-      vetor[i].chave = h;
+    for(int i=0;i<Max;i++){/*Percorre toda a tabela*/
+      vetor[i].chave = h;/*Faz todas as posições do vetor receberem NULL*/
     }
-  return vetor;
+  return vetor;/*Retorna a tabela C como um vetor*/
 }
-
+/*Função que calcula e pega o resto da divisão*/
 int modulo(int numero){
-    int resto = numero % Max;
+    int resto = numero % Max;/*Pega o número aleatório e divide ele pelo tamanho do vetor*/
 
-    return resto;
+    return resto;/*Retorna o resto da divisão*/
 }
 
+/*Função que insere valores dentro da posição do vetor e nas listas*/
 Hash* insere(Hash* h){
-    Hash* aux = h;
-    int escolha,numero,mod;
-
-    printf("Quantos numeros quer adicionar na tabela");
+    Hash* aux = h;/*Ponteiro auxiliar que apontar para a tabela*/
+    int escolha,numero,mod;/*Variáveis*/
+    
+    /*Pergunta ao usuário quantos numeros quer inserir na tabela*/
+    printf("\nQuantos numeros quer adicionar na tabela?");
     scanf("%d", &escolha);
 
-    for(int i=0;i<escolha;i++){
-      numero = rand() % 1000;
-      mod = modulo(numero);
-      printf(" mod: %d num: %d",mod,numero);
-    if(aux[mod].chave == NULL){
-          aux[mod].chave = numero;
-          aux[mod].prox = NULL;
+    for(int i=0;i<escolha;i++){/*Percorre até o limite escolhido pelo o usuário*/
+      numero = rand() % 100;/*Faz a variavel receber um número aleatório*/
+      mod = modulo(numero);/*Recebe o resto da divisão do número aleatório*/
+      
+    if(aux[mod].chave == NULL){/*Se for NULL, não tem nenhum valor dentro do indice i do vetor*/
+          aux[mod].chave = numero;/*Faz a tabela no indice i(resto) receber o número*/
+          aux[mod].prox = NULL;/*Faz a posição i tabela apontar para NULL*/
     }
-    else if(aux[mod].chave != NULL){
-      Hash* conflito = (Hash*)malloc(sizeof(Hash));
+    else if(aux[mod].chave != NULL){/*Se não for NULL, significa que existe elemento dentro da posição i da tabela*/
+      Hash* conflito = (Hash*)malloc(sizeof(Hash));/*Aloca um espaço na memória*/
 
-      if(conflito == NULL){
+      if(conflito == NULL){/*Verifica se alocação foi feita*/
          printf("Erro: Sem espaco na memoria!");
          printf("\nPrograma encerrado por falta de memoria!");
          exit(1);
       }
+      
+      conflito->chave = numero;/*Faz o elemento da lista receber um valor*/
+      conflito->prox = NULL;/*O elemento aponta para NULL*/
 
-      conflito->chave = numero;
-      conflito->prox = NULL;
-
-      if(aux[mod].prox == NULL ){
-         aux[mod].prox = conflito;
+      if(aux[mod].prox == NULL ){/*Se for NULL, a tabela não tem nenhum conflito*/
+         aux[mod].prox = conflito;/*Faz a tabela no indice i, apontar para o primeiro conflito*/
       }
-      else if(aux[mod].prox != NULL){
-           Hash* atual = aux[mod].prox;
-           while(atual->prox != NULL){
-           atual = atual->prox;
+      else if(aux[mod].prox != NULL){/*Se não for NULL, tabela possui conflitos */
+           Hash* atual = aux[mod].prox;/*Cria um ponteiro auxiliar e faz ele apontar para o primeiro conflito da tabela*/
+           while(atual->prox != NULL){/*Percorre a lista ate chegar na ultima posição da lista*/
+           atual = atual->prox;/*Faz o ponteiro avançar*/
       } 
-           atual->prox = conflito;
+           atual->prox = conflito;/*O ultimo elemento da lista aponta para o novo conflito gerado*/
       }
     }
 }    
-    return h;
+    return h;/*Retorna a tabela*/
 }
 /*Função auxiliar para ajudar na inserção das dua tabelas em C*/
 Hash* insereC(Hash* h,int numero){
-    Hash* aux = h;
-    int mod;
+    Hash* aux = h;/*Ponteiro auxiliar que apontar para a tabela*/
+    int mod;/*Variável*/
 
-    mod = modulo(numero);
+    mod = modulo(numero);/*Recebe o resto da divisão do número aleatório*/
       
-    if(aux[mod].chave == NULL){
-          aux[mod].chave = numero;
-          aux[mod].prox = NULL;
+    if(aux[mod].chave == NULL){/*Se for NULL, não tem nenhum valor dentro do indice i do vetor*/
+          aux[mod].chave = numero;/*Faz a tabela no indice i(resto) receber o número*/
+          aux[mod].prox = NULL;/*Faz a posição i tabela apontar para NULL*/
     }
-    else if(aux[mod].chave != NULL){
-      Hash* conflito = (Hash*)malloc(sizeof(Hash));
+    else if(aux[mod].chave != NULL){/*Se não for NULL, significa que existe elemento dentro da posição i da tabela*/
+      Hash* conflito = (Hash*)malloc(sizeof(Hash));/*Aloca um espaço na memória*/
 
-      if(conflito == NULL){
+      if(conflito == NULL){/*Verifica se alocação foi feita com sucesso*/
          printf("Erro: Sem espaco na memoria!");
          printf("\nPrograma encerrado por falta de memoria!");
          exit(1);
       }
 
-      conflito->chave = numero;
-      conflito->prox = NULL;
+      conflito->chave = numero;/*Faz o elemento da lista receber um valor*/
+      conflito->prox = NULL;/*Faz a tabela no indice i, apontar para o primeiro conflito*/
 
-      if(aux[mod].prox == NULL ){
-         aux[mod].prox = conflito;
+      if(aux[mod].prox == NULL ){/*Se for NULL, a tabela não tem nenhum conflito*/
+         aux[mod].prox = conflito;/*Faz a tabela no indice i, apontar para o primeiro conflito*/
       }
-      else if(aux[mod].prox != NULL){
-           Hash* atual = aux[mod].prox;
-           while(atual->prox != NULL){
-           atual = atual->prox;
+      else if(aux[mod].prox != NULL){/*Se não for NULL, tabela possui conflitos */
+           Hash* atual = aux[mod].prox;/*Cria um ponteiro auxiliar e faz ele apontar para o primeiro conflito da tabela*/
+           while(atual->prox != NULL){/*Percorre a lista ate chegar na ultima posição da lista*/
+           atual = atual->prox;/*Faz o ponteiro avançar*/
       } 
-           atual->prox = conflito;
+           atual->prox = conflito;/*O ultimo elemento da lista aponta para o novo conflito gerado*/
       }
     }
    
-    return h;
+    return h;/*Retorna a tabela*/
 }
 
+/*Função que remove qualquer valor da tabela, seja conflito ou não*/
 Hash* remover(Hash* h){
-     Hash* aux = h,*atual,*pos,*ant;
-     int numero,mod;
+     Hash* aux = h,*atual,*pos,*ant;/*Ponteiros Auxialiares para manipulaçaõ*/
+     int numero,mod;/*Variáveis*/
 
-     printf("Qual numero deseja excluir da Tabela?");
+     /*Pergunta ao usuário qual valor quer excluir da tabela*/
+     printf("\nQual numero deseja excluir da Tabela?");
      scanf("%d",&numero);
 
-     mod = modulo(numero);
+     mod = modulo(numero);/*Recebe o resto do valor escolhido*/
 
-    if(numero == aux[mod].chave){
-       if(aux[mod].prox == NULL)
-          aux[mod].chave = NULL;
-       else{
-          atual = aux[mod].prox;
-          pos = atual->prox;
-          aux[mod].chave = atual->chave;
-          aux[mod].prox = pos;
+    if(numero == aux[mod].chave){/*Se o valor que o usuário escolheu está nos indices do vetor*/
+       if(aux[mod].prox == NULL)/*Se o valor que quero excluir não tiver conflitos*/
+          aux[mod].chave = NULL;/*Faz a posição do vetor receber NULL*/
+       else{/*Caso Tenha Conflitos*/
+          atual = aux[mod].prox;/*Faz o ponteiro para o conflito ou a primeira posição da lista*/
+          pos = atual->prox;/*Faz o ponteiro apontar para o segundo conflito da lista*/
+          aux[mod].chave = atual->chave;/*Faz o vetor no indice i receber o valor do primeiro conflito*/
+          aux[mod].prox = pos;/*O vetor no indice i aponta para o segundo conflito*/
        }   
        printf("\nO numero %d foi removido da Tabela Hash no indice [%d] .",numero,mod);
        
       }    
-    else if(aux[mod].prox != NULL){    
-          atual = aux[mod].prox;
-          ant = aux;
+    else if(aux[mod].prox != NULL){/*Se não for NULL, que dizer que existe conflitos dentro do meu vetor no indice i*/
+          atual = aux[mod].prox;/*Ponteiro aponta para o primeiro conflito ou lista do vetor no indice i*/
+          ant = aux;/*Ponteiro aponta para a tabela*/
           
-          if(atual->prox == NULL){
-            aux[mod].prox = NULL;
-            free(atual);
-            return h;
+          if(atual->prox == NULL && atual->chave == numero){/*Se for igual a NULL e o valor que está no conflito for igual o que o usuario*/
+            aux[mod].prox = NULL;/*Vetor indice i recebe NULL*/
+            free(atual);/*Libera o conflito*/
+            return h;/*Retorna a tabela*/
           }
-          else if(atual->prox != NULL && atual->chave == numero){
-            aux[mod].prox = atual->prox;
-            free(atual);
-            return h;
-          }
-
-          while(atual != NULL && atual->chave != numero){
-            ant = atual;
-            atual = atual->prox;
+          else if(atual->prox != NULL && atual->chave == numero){/*Se não for NULL, existe mais de um conflito*/
+            aux[mod].prox = atual->prox;/*O indice i aponta para o segundo conflito da lista*/
+            free(atual);/*Libera o primeiro conflito*/
+            return h;/*Retorna a tabela*/
           }
 
-          if(atual == NULL && ant->prox == NULL){
+          while(atual != NULL && atual->chave != numero){/*Percorre até achar o número para excluir*/
+            ant = atual;/*Guarda o atual*/
+            atual = atual->prox;/*Guarda o posterior*/
+          }
+
+          if(atual == NULL && ant->prox == NULL){/*Se atual chegar até NULL, o elemento não está na tabela*/
             printf("O elemento nao foi encontrado");
-            return h;
+            return h;/*Retorna a tabela*/
           }
-          else if(atual->prox == NULL){
-            ant->prox = NULL;
-            free(atual);
-            return h;  
+          else if(atual->prox == NULL){/*Exclui o ultimo elemento da lista*/
+            ant->prox = NULL;/*Ponteiro anterior aponta para NULL*/
+            free(atual);/*Libera o ultimo conflito*/
+            return h;  /*Retorna a tabela*/
           }
-          else if(atual->prox != NULL){
-            ant->prox = atual->prox;
-            //free(atual);
-            return h;
+          else if(atual->prox != NULL){/*Remove o elemento no meio da lista ou conflito*/
+            ant->prox = atual->prox;/*O ponteiro anterior aponta para o ponteiro posterior*/
+            return h;/*Retorna a tabela*/
           }
             
-      // printf("O numero %d foi removido com sucesso da Tabela",numero);      
+          
     }
-    else if(aux[mod].prox == NULL && aux[mod].chave != numero)
+    else if(aux[mod].prox == NULL && aux[mod].chave != numero)/*Caso o elemento não esteja na tabela*/
          printf("O numero %d nao esta alocado na tabela.",numero);
      
-  return h;
+  return h;/*Retorna a tabela*/
 }
 
 void busca(Hash*h){
